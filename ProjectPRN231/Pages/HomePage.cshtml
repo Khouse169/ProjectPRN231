@@ -1,0 +1,48 @@
+﻿@page
+@model ProjectPRN231.Pages.HomePageModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+
+    <h1>Stories</h1>
+
+    <div>
+        <label for="genreDropdown">Filter by Genre:</label>
+        <select id="genreDropdown" name="genre" onchange="location = this.value;">
+            <option value="/HomePage">All Genres</option>
+            @foreach (var genre in Model.Genres)
+            {
+                <option value="/HomePage?page=@Model.CurrentPage&genreId=@genre.GenreId" @(Model.SelectedGenreId == genre.GenreId ? "selected" : "")>@genre.Name</option>
+            }
+        </select>
+    </div>
+
+    <ul>
+        @foreach (var story in Model.Stories)
+        {
+            <li>@story.Title by @story.Author</li>
+        }
+    </ul>
+
+    <div>
+        @if (Model.TotalPages > 1)
+        {
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                            <a href="/HomePage?page1=@i&genreId=@Model.SelectedGenreId">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
+    </div>
+
+</body>
+</html>

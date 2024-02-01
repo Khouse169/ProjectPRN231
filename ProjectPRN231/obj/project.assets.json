@@ -1027,6 +1027,32 @@
             "rid": "win"
           }
         }
+      },
+      "BusinessObject/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.26"
+        },
+        "compile": {
+          "bin/placeholder/BusinessObject.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BusinessObject.dll": {}
+        }
+      },
+      "DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "BusinessObject": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataAccess.dll": {}
+        }
       }
     }
   },
@@ -2795,10 +2821,22 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "BusinessObject/1.0.0": {
+      "type": "project",
+      "path": "../BusinessObject/BusinessObject.csproj",
+      "msbuildProject": "../BusinessObject/BusinessObject.csproj"
+    },
+    "DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../DataAccess/DataAccess.csproj",
+      "msbuildProject": "../DataAccess/DataAccess.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "BusinessObject >= 1.0.0",
+      "DataAccess >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.26",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.26",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.26",
@@ -2833,7 +2871,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "T:\\Study\\8\\PRN231\\Code\\ProjectPRN231\\BusinessObject\\BusinessObject.csproj": {
+              "projectPath": "T:\\Study\\8\\PRN231\\Code\\ProjectPRN231\\BusinessObject\\BusinessObject.csproj"
+            },
+            "T:\\Study\\8\\PRN231\\Code\\ProjectPRN231\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "T:\\Study\\8\\PRN231\\Code\\ProjectPRN231\\DataAccess\\DataAccess.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectPRN231", "ProjectPRN231\ProjectPRN231.csproj", "{36599122-9F0C-4C6E-A817-E37977F2EA9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{3D1BDD64-8B6B-4ECA-9AC0-7B253168FC27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{3D1BDD64-8B6B-4ECA-9AC0-7B253168FC27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{73ECEE02-7AB9-426E-944A-E19E75A82339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{73ECEE02-7AB9-426E-944A-E19E75A82339}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

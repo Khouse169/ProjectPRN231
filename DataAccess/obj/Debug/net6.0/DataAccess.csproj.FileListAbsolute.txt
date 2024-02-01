@@ -1,0 +1,16 @@
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\bin\Debug\net6.0\DataAccess.dll
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\bin\Debug\net6.0\BusinessObject.dll
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\bin\Debug\net6.0\BusinessObject.pdb
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.sourcelink.json
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.dll
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+T:\Study\8\PRN231\Code\ProjectPRN231\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
