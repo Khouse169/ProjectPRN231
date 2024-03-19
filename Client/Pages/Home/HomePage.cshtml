@@ -1,0 +1,105 @@
+﻿@page
+@model Client.Pages.Home.HomePageModel
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Thêm CSS tùy chỉnh */
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa; /* Màu nền */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+        }
+        .container {
+            margin-bottom: 50px;
+        }
+        .card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .pagination {
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Stories</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="genreDropdown">Filter by Genre:</label>
+                    <select id="genreDropdown" name="genre" class="form-control" onchange="location = this.value;">
+                        <option value="/HomePage">All Genres</option>
+                        @foreach (var genre in Model.Genres)
+                        {
+                            <option value="/Home/HomePage?page=@Model.CurrentPage&genreId=@genre.GenreId">
+                                @genre.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            @foreach (var story in Model.Stories)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="@story.CoverImage" class="card-img-top" alt="@story.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@story.Title</h5>
+                            <p class="card-text">by @story.Author</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.TotalPages > 1)
+                {
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                    <a class="page-link" href="/HomePage?page1=@i&genreId=@Model.SelectedGenreId">@i</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

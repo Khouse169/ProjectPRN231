@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Home Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -20,13 +21,34 @@
             }
         </select>
     </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
 
-    <ul>
-        @foreach (var story in Model.Stories)
-        {
-            <li>@story.Title by @story.Author</li>
-        }
-    </ul>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    @foreach (var story in Model.Stories)
+                    {
+                        <div class="col-md-3">
+                            <div class="card mb-4">
+                                <img src="@story.CoverImage" class="card-img-top" alt="@story.Title">
+                                <div class="card-body">
+                                    <h5 class="card-title">@story.Title</h5>
+                                    <p class="card-text">by @story.Author</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+    
 
     <div>
         @if (Model.TotalPages > 1)
@@ -44,5 +66,6 @@
         }
     </div>
 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
