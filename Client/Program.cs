@@ -8,6 +8,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<StoryDAO>();
 builder.Services.AddScoped<GenreDAO>();
 builder.Services.AddScoped<ProjectPRN231Context>();
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("CORSPolicy", builder => builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed((host) => true));
+});
 
 var app = builder.Build();
 
@@ -21,6 +25,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCors("CORSPolicy");
 
 app.UseRouting();
 

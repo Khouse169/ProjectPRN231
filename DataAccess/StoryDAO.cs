@@ -143,4 +143,10 @@ public class StoryDAO
         return stories;
     }
 
+    public List<Chapter> GetListChapterByStory(int id)
+    {
+        var chapters = _context.Chapters.Where(x => x.StoryId == id).ToList();
+        return chapters;
+    }
+
 }

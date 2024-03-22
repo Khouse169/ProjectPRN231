@@ -22,9 +22,9 @@ namespace DataAccess
             return chapters;
         }
 
-        public Chapter GetChapterById(int chapterId)
+        public Chapter GetChapterById(int chapterId, int storyId)
         {
-            var chapter = _context.Chapters.Find(chapterId);
+            var chapter = _context.Chapters.Where(x => x.ChapterId == chapterId && x.StoryId == storyId).FirstOrDefault();
             return chapter;
         }
 

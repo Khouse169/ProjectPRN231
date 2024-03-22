@@ -15,24 +15,30 @@
             padding-top: 20px;
             background-color: #f8f9fa; /* Màu nền */
         }
+
         h1 {
             text-align: center;
             margin-bottom: 30px;
         }
+
         label {
             font-weight: bold;
         }
+
         .container {
             margin-bottom: 50px;
         }
+
         .card {
             transition: all 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
         .pagination {
             justify-content: center;
         }
@@ -69,11 +75,13 @@
             {
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="@story.CoverImage" class="card-img-top" alt="@story.Title">
-                        <div class="card-body">
-                            <h5 class="card-title">@story.Title</h5>
-                            <p class="card-text">by @story.Author</p>
-                        </div>
+                        <a href="/Home/Detail?storyId=@story.StoryId" style="text-decoration: none; color: inherit;">
+                            <img src="@story.CoverImage" class="card-img-top" alt="@story.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">@story.Title</h5>
+                                <p class="card-text">by @story.Author</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             }
@@ -103,3 +111,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

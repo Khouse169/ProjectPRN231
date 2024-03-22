@@ -2,63 +2,76 @@
 using BusinessObject.Models;
 using System.Collections.Generic;
 using DataAccess;
+using Microsoft.AspNetCore.Authorization;
+
 
 [ApiController]
 [Route("[controller]")]
-public class ChapterController : ControllerBase
+public class StoryController : ControllerBase
 {
-    private readonly ChapterDAO _chapterDAO;
+    private readonly StoryDAO _storyDAO;
 
-    public ChapterController()
+    public StoryController()
     {
-        _chapterDAO = new ChapterDAO();
+        _storyDAO = new StoryDAO();
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<Chapter>> GetAllChapters()
     {
-        var chapters = _chapterDAO.GetAllChapters();
-        return Ok(chapters);
+        var stories = _storyDAO.GetAllStories();
+        return Ok(stories);
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<Chapter> GetChapterById(int id)
+    [HttpGet("GetStoryById/{id}")]
+    public ActionResult<Story> GetStoryById(int id)
     {
-        var chapter = _chapterDAO.GetChapterById(id);
-        if (chapter == null)
+        var stories = _storyDAO.GetStoryById(id);
+        if (stories == null)
         {
             return NotFound();
         }
-        return Ok(chapter);
+        return Ok(stories);
     }
 
     [HttpPost]
-    public IActionResult AddChapter([FromBody] Chapter chapter)
+    public IActionResult AddStory([FromBody] Story story)
     {
-        _chapterDAO.AddChapter(chapter);
-        return CreatedAtAction(nameof(GetChapterById), new { id = chapter.ChapterId }, chapter);
+        _storyDAO.AddStory(story);
+        return CreatedAtAction(nameof(GetStoryById), new { id = story.StoryId }, story);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult UpdateChapter(int id, [FromBody] Chapter chapter)
+    [HttpPut("UpdateStory/{id}")]
+    public IActionResult UpdateStory(int id, [FromBody] Story story)
     {
-        if (id != chapter.ChapterId)
+        if (id != story.StoryId)
         {
             return BadRequest();
         }
 
-        _chapterDAO.UpdateChapter(chapter);
+        _storyDAO.UpdateStory(story);
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult DeleteChapter(int id)
+    [HttpDelete("DeleteStory/{id}")]
+    public IActionResult DeleteStory(int id)
     {
-        var deleted = _chapterDAO.DeleteChapter(id);
+        var deleted = _storyDAO.DeleteStory(id);
         if (!deleted)
         {
             return NotFound();
         }
         return NoContent();
+    }
+
+    [HttpGet("GetListChapterByStory/{id}")]
+    public ActionResult<Chapter> GetListChapterByStory(int id)
+    {
+        var chapter = _storyDAO.GetListChapterByStory(id);
+        if (chapter == null)
+        {
+            return NotFound();
+        }
+        return Ok(chapter);
     }
 }

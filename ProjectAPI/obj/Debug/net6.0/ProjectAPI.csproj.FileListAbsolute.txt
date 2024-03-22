@@ -69,3 +69,5 @@ T:\Study\8\PRN231\Code\ProjectPRN231\ProjectAPI\obj\Debug\net6.0\refint\ProjectA
 T:\Study\8\PRN231\Code\ProjectPRN231\ProjectAPI\obj\Debug\net6.0\ProjectAPI.pdb
 T:\Study\8\PRN231\Code\ProjectPRN231\ProjectAPI\obj\Debug\net6.0\ProjectAPI.genruntimeconfig.cache
 T:\Study\8\PRN231\Code\ProjectPRN231\ProjectAPI\obj\Debug\net6.0\ref\ProjectAPI.dll
+T:\Study\8\PRN231\Code\ProjectPRN231\ProjectAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+T:\Study\8\PRN231\Code\ProjectPRN231\ProjectAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll

@@ -1,0 +1,99 @@
+﻿@page
+@model Client.Pages.Home.ChapterModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chapter Detail</title>
+</head>
+<body>
+    <!-- Hiển thị tên truyện -->
+    <h1 id="chapterName">
+
+    </h1>
+
+    <!-- Nút previous -->
+    <button id="btnPrevious">Previous</button>
+
+    <!-- Dropdown select option -->
+    <select id="chapterSelect">
+
+    </select>
+
+    <!-- Nút next -->
+    <button id="btnNext">Next</button>
+
+    <!-- Nội dung chương sẽ được tải vào đây -->
+    <div id="chapterContent"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Lấy chapterId và storyId từ URL
+            var urlParams = new URLSearchParams(window.location.search);
+            var chapterId = urlParams.get('chapterId');
+            var storyId = urlParams.get('storyId');
+
+            // Gọi API để lấy nội dung của chương
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:7261/api/Chapter/GetChapterById/' + chapterId + '&' + storyId,
+                success: function (chapter) {
+                    // Hiển thị nội dung của chương
+                    $('#chapterContent').html(chapter.content);
+                    $('#chapterName').html(chapter.title);
+                },
+                error: function () {
+                    $('#chapterContent').html('Failed to load chapter content.');
+                }
+            });
+
+            // Đồng bộ danh sách chương với dropdown select option
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:7261/Story/GetListChapterByStory/' + storyId,
+                success: function (chapters) {
+                    var chapterSelect = $('#chapterSelect');
+                    chapters.forEach(function (chapter) {
+                        chapterSelect.append($('<option>', {
+                            value: chapter.chapterId,
+                            text: chapter.title
+                        }));
+                    });
+
+                    // Chọn chương hiện tại trong dropdown
+                    chapterSelect.val(chapterId);
+                },
+                error: function () {
+                    console.log('Failed to load chapter list.');
+                }
+            });
+
+            // Xử lý sự kiện khi chọn một chương mới từ dropdown
+            $('#chapterSelect').change(function () {
+                var selectedChapterId = $(this).val();
+                var newUrl = 'https://localhost:7192/Home/Chapter?storyId=' + storyId + '&chapterId=' + selectedChapterId;
+                window.location.href = newUrl;
+            });
+
+            // Xử lý sự kiện khi nhấp nút Previous
+            $('#btnPrevious').click(function () {
+                var previousChapterId = parseInt(chapterId) - 1; // Giả sử chương trước là chương có id nhỏ hơn một đơn vị so với chương hiện tại
+                var newUrl = 'https://localhost:7192/Home/Chapter?storyId=' + storyId + '&chapterId=' + previousChapterId;
+                window.location.href = newUrl;
+            });
+
+            // Xử lý sự kiện khi nhấp nút Next
+            $('#btnNext').click(function () {
+                var nextChapterId = parseInt(chapterId) + 1; // Giả sử chương kế tiếp là chương có id lớn hơn một đơn vị so với chương hiện tại
+                var newUrl = 'https://localhost:7192/Home/Chapter?storyId=' + storyId + '&chapterId=' + nextChapterId;
+                window.location.href = newUrl;
+            });
+        });
+    </script>
+</body>
+</html>
+

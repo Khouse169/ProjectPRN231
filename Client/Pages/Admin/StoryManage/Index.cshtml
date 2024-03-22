@@ -1,0 +1,78 @@
+﻿@page
+@model Client.Pages.Admin.StoryManage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Story[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Story[0].Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Story[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Story[0].CoverImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Story[0].IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Story[0].PublishDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Story[0].IsDelete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Story[0].Genre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Story) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CoverImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsApproved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDelete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre.Name)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.StoryId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.StoryId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.StoryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
