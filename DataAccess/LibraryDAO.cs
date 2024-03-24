@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BusinessObject.Models;
+using BusinessObject.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessObject.DataAccess
@@ -38,10 +39,20 @@ namespace BusinessObject.DataAccess
             return libraries;
         }
 
-        public void AddLibrary(Library library)
+        public bool AddLibrary(LibraryDTO library)
         {
-            _context.Libraries.Add(library);
-            _context.SaveChanges();
+            var check = _context.Libraries.Where(x => x.UserId == library.UserId && x.StoryId == library.StoryId).ToList();
+            if (check == null)
+            {
+                _context.Libraries.Add(new Library
+                {
+                    UserId = library.UserId,
+                    StoryId = library.StoryId,
+                });
+                _context.SaveChanges();
+                return true;
+            }
+            else return false;
         }
 
         public void RemoveLibrary(int libraryId)

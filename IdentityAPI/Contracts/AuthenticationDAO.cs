@@ -57,7 +57,7 @@ namespace IdentityAPI.Contracts
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(token);
             var claims = jwtToken.Claims;
-            var idEmployee = claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
+            var idEmployee = claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
             var employeeLogged = userDAO.GetUserById(int.Parse(idEmployee));
             User p = new User
             {

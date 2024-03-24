@@ -37,48 +37,52 @@
 </head>
 <body>
     <div id="storyDetail">
-        <!-- Thông tin chi tiết của câu chuyện sẽ được hiển thị ở đây -->
+        <div class="row">
+            <div class="col-md-5" style="display: flex; justify-content: center; align-items: center;">
+                <img src="https://dummyimage.com/200x300/000/fff" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+            </div>
+            <div class="col-md-7">
+                <div class="story-info">
+                    <h2 id="storyTitle"></h2>
+                    <p><strong>Author:</strong> <span id="storyAuthor"></span></p>
+                    <p><strong>Description:</strong> <span id="storyDescription"></span></p>
+                    <p><strong>Publish Date:</strong> <span id="storyPublishDate"></span></p>
+                    <form id="addToLibraryForm" method="post">
+                        <input type="submit" value="Add to library" class="btn btn-primary" id="addToLibraryBtn" />
+                    </form>
+                    <!-- Các trường thông tin khác của câu chuyện -->
+                </div>
+            </div>
+        </div>
+        <div class="chapter-list">
+            <h4>Các chapter</h4>
+            <ul id="chapterList"></ul>
+        </div>
     </div>
 
     <script>
         $(document).ready(function () {
-            // Lấy storyId từ URL
             var urlParams = new URLSearchParams(window.location.search);
             var storyId = urlParams.get('storyId');
 
-            // Nếu storyId không null, thực hiện yêu cầu AJAX
             if (storyId) {
                 $.ajax({
                     type: 'GET',
-                    url: 'https://localhost:7261/Story/GetStoryById/' + storyId, // Sử dụng endpoint mới
+                    url: 'https://localhost:7261/Story/GetStoryById/' + storyId,
                     success: function (story) {
-                        $('#storyDetail').html(`
-                                <div class="row">
-                                    <div class="col-md-5" style="display: flex; justify-content: center; align-items: center;">
-                                        <img src="https://dummyimage.com/200x300/000/fff" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="story-info">
-                                            <h2>${story.title}</h2>
-                                            <p><strong>Author:</strong> ${story.author}</p>
-                                            <p><strong>Description:</strong> ${story.description}</p>
-                                            <p><strong>Publish Date:</strong> ${story.publishDate}</p>
-                                            <p><button>Add to library</button></a>
-                                            <!-- Các trường thông tin khác của câu chuyện -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="chapter-list" style>
-                                    <h4>Các chapter</h4>
-                                    <ul id="chapterList"></ul>
-                                </div>
-                                `);
+                        // Đổ dữ liệu từ AJAX vào các phần tử HTML tương ứng
+                        $('#storyTitle').text(story.title);
+                        $('#storyAuthor').text(story.author);
+                        $('#storyDescription').text(story.description);
+                        $('#storyPublishDate').text(story.publishDate);
+
+                        // Gửi yêu cầu AJAX để lấy danh sách chapter
                         $.ajax({
                             type: 'GET',
                             url: 'https://localhost:7261/Story/GetListChapterByStory/' + storyId,
                             success: function (chapters) {
                                 chapters.forEach(function (chapter) {
-                                    $('#chapterList').append(`<li><a href="/Home/Chapter?chapterId=${chapter.chapterId}&&storyId=${storyId}">${chapter.title}<a/></li>`);
+                                    $('#chapterList').append(`<li><a href="/Home/Chapter?chapterId=${chapter.chapterId}&&storyId=${storyId}">${chapter.title}</a></li>`);
                                 });
                             },
                             error: function () {
@@ -93,7 +97,55 @@
             } else {
                 $('#storyDetail').html('<p>StoryId not found in URL.</p>');
             }
+
+            $('#addToLibraryForm').submit(function (event) {
+                event.preventDefault(); // Ngăn chặn form submit mặc định
+
+                // Lấy storyId từ URL
+                var urlParams = new URLSearchParams(window.location.search);
+                var storyId = urlParams.get('storyId');
+                console.log(storyId)
+                if (storyId) {
+                    // Lấy userId từ token trong cookies
+                    var userId = getCookie('AccessToken'); // Sử dụng hàm getCookie để lấy giá trị của AccessToken từ cookies
+
+                    // Kiểm tra userId
+                    if (!userId) {
+                        console.log('User ID not found.');
+                        return;
+                    }
+
+                    // Gọi API để thêm vào thư viện
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://localhost:7261/api/Library/AddLibrary',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            storyId: storyId,
+                            userId: userId
+                        }),
+                        success: function (response) {
+                            console.log('Added to library successfully.');
+                            // Thực hiện các hành động khác sau khi thêm vào thư viện nếu cần
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error adding to library:', error);
+                        }
+                    });
+                } else {
+                    console.log('StoryId not found in URL.');
+                }
+            });
+
+            // Hàm lấy giá trị của một cookie
+            function getCookie(name) {
+                var value = "; " + document.cookie;
+                console.log(document.cookie);
+                var parts = value.split("; " + name + "=");
+                if (parts.length == 2) return parts.pop().split(";").shift();
+            }
         });
     </script>
+
 </body>
 </html>
