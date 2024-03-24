@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using System.IdentityModel.Tokens.Jwt
+@{
+    string token = Context.Request.Cookies["AccessToken"];
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,19 +24,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" href="https://localhost:7192/Home/HomePage">Home</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav flex-grow-2">
-                        <form asp-controller="Home" asp-action="index" style="display: contents;">
-                            <input style="border-radius: 5px" type="text" name="search" placeholder="Nhập tên sách cần tìm" />
+                        <form method="get" action="/Home/HomePage" style="display: contents;">
+                            <input style="border-radius: 5px" type="text" name="searchTerm" placeholder="Nhập tên sách cần tìm" />
                             <button style="margin-left: 10px; border-radius: 5px; color: blue; border-color:blue" type="submit">Tìm</button>
                         </form>
 
                         @* @if (Context.Session.GetString("Email") != null)
-                        { *@
+                        { 
                             <li class="nav-item">
-                                @* <a class="nav-link text-dark" href="/Authentication/ChangeUserInfor?userId=@Context.Session.GetInt32("ID")">Xin chào: @Context.Session.GetString("Fullname")</a> *@
+                                <a class="nav-link text-dark" href="/Authentication/ChangeUserInfor?userId=@Context.Session.GetInt32("ID")">Xin chào: @Context.Session.GetString("Fullname")</a> 
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark">Library</a>
@@ -40,7 +44,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Đăng xuất</a>
                             </li>
-                        @* } *@
+                        } *@
 
 
                         @* else
@@ -52,6 +56,40 @@
                                 <a class="nav-link text-dark" href="https://localhost:7023/Authentication/Register">Đăng ký</a>
                             </li>
                         } *@
+                        @if (!string.IsNullOrEmpty(token))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
+                            if (jsonToken != null)
+                            {
+                                var roleClaim = jsonToken.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+
+                                if (roleClaim.ToLower() == "admin")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Admin/ChapterManage/Index">Manage web</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark">Library</a>
+                                    </li>
+                                }
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Authentication/Logout">Đăng xuất</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="https://localhost:7192/Authentication/Login">Đăng nhập</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="https://localhost:7192/Authentication/Register">Đăng ký</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -67,6 +105,7 @@
         <div class="container">
         </div>
     </footer> *@
+    <!-- Thư viện CKEditor -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

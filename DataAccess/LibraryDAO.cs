@@ -1,11 +1,9 @@
-﻿using BusinessObject.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess
+namespace BusinessObject.DataAccess
 {
     public class LibraryDAO
     {
@@ -24,8 +22,20 @@ namespace DataAccess
 
         public Library GetLibraryById(int libraryId)
         {
-            var library = _context.Libraries.Find(libraryId);
+            var library = _context.Libraries.FirstOrDefault(l => l.LibraryId == libraryId);
             return library;
+        }
+
+        public List<Library> GetLibrariesByUserId(int userId)
+        {
+            var libraries = _context.Libraries.Where(l => l.UserId == userId).ToList();
+            return libraries;
+        }
+
+        public List<Library> GetLibrariesByStoryId(int storyId)
+        {
+            var libraries = _context.Libraries.Where(l => l.StoryId == storyId).ToList();
+            return libraries;
         }
 
         public void AddLibrary(Library library)
@@ -34,32 +44,33 @@ namespace DataAccess
             _context.SaveChanges();
         }
 
-        public void UpdateLibrary(Library library)
+        public void RemoveLibrary(int libraryId)
         {
-            var existingLibrary = _context.Libraries.Find(library.LibraryId);
-
-            if (existingLibrary != null)
+            var libraryToRemove = _context.Libraries.Find(libraryId);
+            if (libraryToRemove != null)
             {
-                existingLibrary.UserId = library.UserId;
-                existingLibrary.StoryId = library.StoryId;
-
+                _context.Libraries.Remove(libraryToRemove);
                 _context.SaveChanges();
             }
         }
 
-        public bool DeleteLibrary(int libraryId)
+        public void RemoveLibrariesByUserId(int userId)
         {
-            var libraryToDelete = _context.Libraries.Find(libraryId);
-
-            if (libraryToDelete != null)
+            var librariesToRemove = _context.Libraries.Where(l => l.UserId == userId).ToList();
+            if (librariesToRemove.Any())
             {
-                _context.Libraries.Remove(libraryToDelete);
+                _context.Libraries.RemoveRange(librariesToRemove);
                 _context.SaveChanges();
-                return true;
             }
-            else
+        }
+
+        public void RemoveLibrariesByStoryId(int storyId)
+        {
+            var librariesToRemove = _context.Libraries.Where(l => l.StoryId == storyId).ToList();
+            if (librariesToRemove.Any())
             {
-                return false;
+                _context.Libraries.RemoveRange(librariesToRemove);
+                _context.SaveChanges();
             }
         }
     }

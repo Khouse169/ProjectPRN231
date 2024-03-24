@@ -2,9 +2,8 @@
 @model Client.Pages.Authentication.RegisterModel
 @{
 }
+
 <style>
-
-
     .login-page {
         max-width: 100%;
         padding: 8% 0 0;
@@ -49,7 +48,9 @@
             cursor: pointer;
         }
 
-            .form button:hover, .form button:active, .form button:focus {
+            .form button:hover,
+            .form button:active,
+            .form button:focus {
                 background: #ff6b6b;
             }
 
@@ -75,7 +76,8 @@
         margin: 0 auto;
     }
 
-        .container:before, .container:after {
+        .container:before,
+        .container:after {
             content: "";
             display: block;
             clear: both;
@@ -117,26 +119,65 @@
     }
 </style>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('form').submit(function (event) {
+            event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu một cách thông thường
+
+            var formData = {
+                FullName: $('input[name="FullName"]').val(),
+                Username: $('input[name="Username"]').val(),
+                Password: $('input[name="Password"]').val(),
+                Email: $('input[name="Email"]').val(),
+                role: $('input[name="role"]').val(),
+                balance: $('input[name="balance"]').val()
+                // Thêm các trường khác tương ứng với các thuộc tính của đối tượng User trong API của bạn (nếu cần)
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: 'https://localhost:7261/api/Users/AddUser', // Địa chỉ API của bạn
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (data) {
+                    console.log('Đăng ký thành công!');
+                    window.location.href = 'https://localhost:7192/Authentication/Login'
+                    // Thực hiện các hành động cần thiết khi đăng ký thành công (ví dụ: chuyển hướng đến trang chính, hiển thị thông báo success, vv.)
+                },
+                error: function (xhr, status, error) {
+                    console.error('Đăng ký thất bại:', error);
+                    var errorMessage = xhr.responseJSON ? xhr.responseJSON : 'Có lỗi xảy ra!';
+                    $('.msg-error').text(errorMessage);
+                }
+            });
+        });
+    });
+</script>
+
 <div class="login-page">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <div class="form" style="padding: 40px">
-                    <form class="" action="Register" method="post">
-                        <h4>ĐĂNG KÝ TÀI KHOẢN</h4>
-                        <div class="msg-error" style="text-align:center; color: red">
-                            @ViewData["msg"]
-                        </div>
-                        
-
-
-                    </form>
-
-                </div>
+                <form class="form" style="padding: 40px">
+                    <h4>ĐĂNG KÝ TÀI KHOẢN</h4>
+                    <div class="msg-error" style="text-align:center; color: red">
+                        @ViewData["msg"]
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Họ và tên" name="FullName" />
+                        <input type="text" placeholder="Tên đăng nhập" name="Username" />
+                        <input type="password" placeholder="Mật khẩu" name="Password" required />
+                        <input type="email" placeholder="Email" name="Email" required />
+                        <input type="text" name="role" value="user" hidden />
+                        <input type="number" name="balance" value="0" hidden />
+                    </div>
+                    <button type="submit">Đăng ký</button>
+                </form>
             </div>
             <div class="col-md-4"></div>
         </div>
     </div>
-
 </div>

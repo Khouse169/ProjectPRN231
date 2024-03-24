@@ -98,7 +98,7 @@
                             @for (int i = 1; i <= Model.TotalPages; i++)
                             {
                                 <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
-                                    <a class="page-link" href="/Home/HomePage?page1=@i&genreId=@Model.SelectedGenreId">@i</a>
+                                    <a class="page-link" href="/Home/HomePage?page1=@i&genreId=@Model.SelectedGenreId&searchTerm=@Model.SearchTerm">@i</a>
                                 </li>
                             }
                         </ul>

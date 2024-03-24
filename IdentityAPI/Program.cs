@@ -14,11 +14,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
     { 
         options.TokenValidationParameters = new TokenValidationParameters 
         { 
-            ValidateIssuer = true, 
+            ValidateIssuer = false, 
             ValidIssuer = "IdentityServerIssuer", 
-            ValidateAudience = true, 
+            ValidateAudience = false, 
             ValidAudience = "IdentityServerClient", 
-            ValidateLifetime = true, 
+            ValidateLifetime = false, 
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("VerySecretAndLongKey-NeedMoreSymbolsHere-123")), ValidateIssuerSigningKey = true, 
         }; 
     }); 

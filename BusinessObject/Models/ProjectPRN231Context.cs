@@ -204,6 +204,11 @@ namespace BusinessObject.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("username");
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnType("bit")
+                    .IsUnicode(false)
+                    .HasColumnName("isActive");
             });
 
             OnModelCreatingPartial(modelBuilder);

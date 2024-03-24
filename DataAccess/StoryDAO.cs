@@ -44,7 +44,9 @@ public class StoryDAO
                          CoverImage = s.CoverImage,
                          GenreId = s.GenreId,
                          //GenreName = g.name, // Thêm GenreName vào DTO
-                         IsApproved = s.IsApproved ?? false
+                         IsApproved = s.IsApproved ?? false,
+                         PublishDate = s.PublishDate
+
                      })
                 .FirstOrDefault();
 
@@ -147,6 +149,23 @@ public class StoryDAO
     {
         var chapters = _context.Chapters.Where(x => x.StoryId == id).ToList();
         return chapters;
+    }
+
+    public List<Story> SearchStories(string searchTerm, int page, int itemsPerPage)
+    {
+        return _context.Stories
+            .Where(s => s.Title.Contains(searchTerm))
+            .Skip((page - 1) * itemsPerPage)
+            .Take(itemsPerPage)
+            .ToList();
+    }
+
+    public int GetTotalPagesForSearch(string searchTerm, int itemsPerPage)
+    {
+        var totalItems = _context.Stories
+            .Count(s => s.Title.Contains(searchTerm));
+
+        return (int)Math.Ceiling((double)totalItems / itemsPerPage);
     }
 
 }
